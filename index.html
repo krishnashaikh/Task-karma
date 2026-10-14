@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskKarma - Earn By Tasks</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0b1020;
+  color: white;
+}
+
+header {
+  padding: 20px;
+  background: #121a30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #8b9cff;
+}
+
+.badge {
+  background: #253252;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.welcome {
+  margin: 20px 0;
+}
+
+.welcome p {
+  color: #aab5d0;
+  margin-top: 8px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.card {
+  background: #151e35;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #273451;
+}
+
+.card p {
+  color: #aab5d0;
+  font-size: 13px;
+}
+
+.card h2 {
+  margin-top: 12px;
+  color: #a5b4fc;
+}
+
+h3 {
+  margin: 28px 0 15px;
+}
+
+.task {
+  background: #151e35;
+  border: 1px solid #273451;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.task p {
+  color: #aab5d0;
+  font-size: 13px;
+  margin: 8px 0 15px;
+}
+
+.reward {
+  color: #6ee7b7;
+  font-weight: bold;
+}
+
+button {
+  background: #7888ff;
+  color: #0b1020;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.withdraw {
+  background: #151e35;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+
+input {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+  padding: 13px;
+  border-radius: 8px;
+  border: 1px solid #35415f;
+  background: #0b1020;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #aab5d0;
+  font-size: 12px;
+}
+
+@media (min-width: 700px) {
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">TaskKarma.</div>
+  <div class="badge">MICRO TASKS</div>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <h1>Earn With Your Skills 👋</h1>
+    <p>Complete tasks, submit proof and earn rewards.</p>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <p>Total Earnings</p>
+      <h2>₹0.00</h2>
+    </div>
+
+    <div class="card">
+      <p>Available Balance</p>
+      <h2>₹0.00</h2>
+    </div>
+
+    <div class="card">
+      <p>Pending Rewards</p>
+      <h2>₹0.00</h2>
+    </div>
+
+    <div class="card">
+      <p>Tasks Completed</p>
+      <h2>0</h2>
+    </div>
+  </section>
+
+  <h3>🔥 Available Tasks</h3>
+
+  <section class="task">
+    <h4>Website Testing</h4>
+    <p>Visit a test website and share your feedback.</p>
+    <span class="reward">Reward: ₹10</span>
+    <br><br>
+    <button onclick="alert('Task instructions will be added soon!')">
+      View Task
+    </button>
+  </section>
+
+  <section class="task">
+    <h4>Data Entry</h4>
+    <p>Complete a sample data-entry assignment.</p>
+    <span class="reward">Reward: ₹15</span>
+    <br><br>
+    <button onclick="alert('Task instructions will be added soon!')">
+      View Task
+    </button>
+  </section>
+
+  <section class="task">
+    <h4>App Testing</h4>
+    <p>Test an app and submit your feedback.</p>
+    <span class="reward">Reward: ₹20</span>
+    <br><br>
+    <button onclick="alert('Task instructions will be added soon!')">
+      View Task
+    </button>
+  </section>
+
+  <h3>💸 Withdraw Earnings</h3>
+
+  <section class="withdraw">
+    <p>Minimum withdrawal: ₹100</p>
+
+    <input type="number" placeholder="Enter amount (₹)">
+    <input type="text" placeholder="Enter UPI ID">
+
+    <button onclick="alert('Withdrawal system will be connected later.')">
+      Request Withdrawal
+    </button>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 TaskKarma · Earn through genuine tasks
+</footer>
+
+</body>
+</html>

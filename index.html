@@ -1,235 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskKarma - Earn By Tasks</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskKarma | Earn by Completing Tasks</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body {
-  background: #0b1020;
-  color: white;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-header {
-  padding: 20px;
-  background: #121a30;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    body {
+      background: #0b1020;
+      color: #fff;
+      min-height: 100vh;
+    }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #8b9cff;
-}
+    header {
+      padding: 20px;
+      background: #111a30;
+      border-bottom: 1px solid #263450;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.badge {
-  background: #253252;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
+    .logo {
+      color: #55e6a5;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-.container {
-  padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-}
+    main {
+      width: 92%;
+      max-width: 480px;
+      margin: 35px auto;
+    }
 
-.welcome {
-  margin: 20px 0;
-}
+    .card {
+      background: #141e35;
+      border: 1px solid #293958;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
 
-.welcome p {
-  color: #aab5d0;
-  margin-top: 8px;
-}
+    h2 {
+      margin-bottom: 10px;
+    }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin: 25px 0;
-}
+    p {
+      color: #b9c5da;
+      line-height: 1.6;
+      font-size: 14px;
+    }
 
-.card {
-  background: #151e35;
-  padding: 20px;
-  border-radius: 15px;
-  border: 1px solid #273451;
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border: 1px solid #344563;
+      background: #0b1428;
+      color: white;
+      border-radius: 9px;
+      font-size: 15px;
+    }
 
-.card p {
-  color: #aab5d0;
-  font-size: 13px;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #55e6a5;
+      color: #07150e;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.card h2 {
-  margin-top: 12px;
-  color: #a5b4fc;
-}
+    .secondary {
+      background: #263652;
+      color: white;
+    }
 
-h3 {
-  margin: 28px 0 15px;
-}
+    .hidden {
+      display: none;
+    }
 
-.task {
-  background: #151e35;
-  border: 1px solid #273451;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 12px;
-}
+    #message {
+      margin-top: 15px;
+      overflow-wrap: anywhere;
+    }
 
-.task p {
-  color: #aab5d0;
-  font-size: 13px;
-  margin: 8px 0 15px;
-}
+    .notice {
+      color: #ffd479;
+      font-size: 13px;
+      margin-top: 12px;
+    }
 
-.reward {
-  color: #6ee7b7;
-  font-weight: bold;
-}
+    .task {
+      border: 1px solid #344563;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 14px;
+    }
 
-button {
-  background: #7888ff;
-  color: #0b1020;
-  border: none;
-  border-radius: 8px;
-  padding: 11px 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.withdraw {
-  background: #151e35;
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 15px;
-}
-
-input {
-  display: block;
-  width: 100%;
-  margin: 12px 0;
-  padding: 13px;
-  border-radius: 8px;
-  border: 1px solid #35415f;
-  background: #0b1020;
-  color: white;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #aab5d0;
-  font-size: 12px;
-}
-
-@media (min-width: 700px) {
-  .cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-</style>
+    footer {
+      text-align: center;
+      color: #7f8da8;
+      padding: 25px;
+      font-size: 12px;
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <div class="logo">TaskKarma ✦</div>
+    <span style="color:#b9c5da;font-size:13px;">Earn • Complete • Grow</span>
+  </header>
 
-<header>
-  <div class="logo">TaskKarma.</div>
-  <div class="badge">MICRO TASKS</div>
-</header>
+  <main>
+    <section id="authSection" class="card">
+      <h2>Welcome to TaskKarma 👋</h2>
+      <p>Create an account or log in to continue.</p>
 
-<main class="container">
+      <input id="email" type="email"
+        placeholder="Enter your email address"
+        autocomplete="email">
 
-  <section class="welcome">
-    <h1>Earn With Your Skills 👋</h1>
-    <p>Complete tasks, submit proof and earn rewards.</p>
-  </section>
+      <input id="password" type="password"
+        placeholder="Password (minimum 6 characters)"
+        autocomplete="current-password">
 
-  <section class="cards">
-    <div class="card">
-      <p>Total Earnings</p>
-      <h2>₹0.00</h2>
-    </div>
+      <button id="signupBtn" onclick="signup()">Create Account</button>
+      <button id="loginBtn" class="secondary" onclick="login()">Login</button>
 
-    <div class="card">
-      <p>Available Balance</p>
-      <h2>₹0.00</h2>
-    </div>
+      <p id="message" role="status" aria-live="polite"></p>
 
-    <div class="card">
-      <p>Pending Rewards</p>
-      <h2>₹0.00</h2>
-    </div>
+      <p class="notice">
+        Use an email address you control. Never share your password or
+        email verification link with anyone.
+      </p>
+    </section>
 
-    <div class="card">
-      <p>Tasks Completed</p>
-      <h2>0</h2>
-    </div>
-  </section>
+    <section id="dashboard" class="hidden">
+      <div class="card">
+        <h2>Welcome! 🎉</h2>
+        <p id="userEmail"></p>
+        <p style="margin-top:12px;">Your account is connected.</p>
+        <button class="secondary" onclick="logout()">Logout</button>
+      </div>
 
-  <h3>🔥 Available Tasks</h3>
+      <div class="card">
+        <h2>Available Tasks 📋</h2>
+        <p>Task listings will appear here when the task system is connected.</p>
 
-  <section class="task">
-    <h4>Website Testing</h4>
-    <p>Visit a test website and share your feedback.</p>
-    <span class="reward">Reward: ₹10</span>
-    <br><br>
-    <button onclick="alert('Task instructions will be added soon!')">
-      View Task
-    </button>
-  </section>
+        <div id="taskList">
+          <div class="task">
+            <strong>Task listings coming soon</strong>
+            <p>Real tasks and rewards are not active yet.</p>
+          </div>
+        </div>
+      </div>
 
-  <section class="task">
-    <h4>Data Entry</h4>
-    <p>Complete a sample data-entry assignment.</p>
-    <span class="reward">Reward: ₹15</span>
-    <br><br>
-    <button onclick="alert('Task instructions will be added soon!')">
-      View Task
-    </button>
-  </section>
+      <div class="card">
+        <h2>My Earnings 💰</h2>
+        <p>₹0 — no earnings have been credited.</p>
+        <p class="notice">
+          Payments and withdrawals are not enabled yet.
+          Completing signup alone does not earn money.
+        </p>
+      </div>
+    </section>
+  </main>
 
-  <section class="task">
-    <h4>App Testing</h4>
-    <p>Test an app and submit your feedback.</p>
-    <span class="reward">Reward: ₹20</span>
-    <br><br>
-    <button onclick="alert('Task instructions will be added soon!')">
-      View Task
-    </button>
-  </section>
+  <footer>
+    TaskKarma © 2026 · Complete tasks honestly
+  </footer>
 
-  <h3>💸 Withdraw Earnings</h3>
+  <script>
+    // STEP: Replace these two placeholders with your Supabase values.
+    const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL";
+    const SUPABASE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY";
 
-  <section class="withdraw">
-    <p>Minimum withdrawal: ₹100</p>
+    let client;
 
-    <input type="number" placeholder="Enter amount (₹)">
-    <input type="text" placeholder="Enter UPI ID">
+    const message = document.getElementById("message");
+    const authSection = document.getElementById("authSection");
+    const dashboard = document.getElementById("dashboard");
 
-    <button onclick="alert('Withdrawal system will be connected later.')">
-      Request Withdrawal
-    </button>
-  </section>
+    function showMessage(text, color = "#ffd479") {
+      message.textContent = text;
+      message.style.color = color;
+    }
 
-</main>
+    function setLoading(loading) {
+      document.getElementById("signupBtn").disabled = loading;
+      document.getElementById("loginBtn").disabled = loading;
+    }
 
-<footer>
-  © 2026 TaskKarma · Earn through genuine tasks
-</footer>
+    function showDashboard(user) {
+      authSection.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      document.getElementById("userEmail").textContent =
+        "Logged in as: " + user.email;
+    }
 
+    function showLogin() {
+      dashboard.classList.add("hidden");
+      authSection.classList.remove("hidden");
+    }
+
+    function getCredentials() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("Please enter both email and password.", "#ff8d8d");
+        return null;
+      }
+
+      if (password.length < 6) {
+        showMessage("Password must be at least 6 characters.", "#ff8d8d");
+        return null;
+      }
+
+      return { email, password };
+    }
+
+    async function signup() {
+      const credentials = getCredentials();
+      if (!credentials) return;
+
+      setLoading(true);
+      showMessage("Creating your account...");
+
+      try {
+        const { data, error } = await client.auth.signUp(credentials);
+
+        if (error) throw error;
+
+        if (data.session && data.user) {
+          showDashboard(data.user);
+        } else {
+          showMessage(
+            "Account request received. Check your email for a verification link, then log in.",
+            "#55e6a5"
+          );
+        }
+      } catch (error) {
+        showMessage(error.message || "Signup failed.", "#ff8d8d");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function login() {
+      const credentials = getCredentials();
+      if (!credentials) return;
+
+      setLoading(true);
+      showMessage("Logging in...");
+
+      try {
+        const { data, error } = await client.auth.signInWithPassword(
+          credentials
+        );
+
+        if (error) throw error;
+
+        showDashboard(data.user);
+      } catch (error) {
+        showMessage(
+          error.message || "Login failed. Check your details.",
+          "#ff8d8d"
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function logout() {
+      const { error } = await client.auth.signOut();
+
+      if (error) {
+        alert("Logout failed. Please try again.");
+        return;
+      }
+
+      showLogin();
+      showMessage("You have logged out successfully.", "#55e6a5");
+    }
+
+    async function initialize() {
+      if (
+        SUPABASE_URL.startsWith(https://siqlgnnfegizgnnfnmlr.supabase.co/rest/v1/) ||
+        SUPABASE_KEY.startsWith(sb_publishable_8w9YB5V8EQUhrVrxOR2tIg_yXTGdVXG
+      ) {
+        showMessage(
+          "Setup needed: add your Supabase Project URL and Publishable Key in the code.",
+          "#ff8d8d"
+        );
+        return;
+      }
+
+      try {
+        client = window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY
+        );
+
+        const { data, error } = await client.auth.getSession();
+
+        if (error) throw error;
+
+        if (data.session) {
+          showDashboard(data.session.user);
+        }
+
+        client.auth.onAuthStateChange((_event, session) => {
+          if (session) {
+            showDashboard(session.user);
+          } else {
+            showLogin();
+          }
+        });
+      } catch (error) {
+        showMessage(
+          "Could not connect. Check your Supabase settings.",
+          "#ff8d8d"
+        );
+      }
+    }
+
+    initialize();
+  </script>
 </body>
 </html>
